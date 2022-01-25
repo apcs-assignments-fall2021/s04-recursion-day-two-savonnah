@@ -46,8 +46,19 @@ public class MyMain {
     // countBigDigits(99999) => 5
     // countBigDigits(521931) => 2
     public static int countBigDigits(int x) {
-        // YOUR CODE HERE
-        return -1;
+        // Base case
+        // int count = 0;
+        if (x == 0) {
+            return 0;
+        }
+        // Recursive call
+        else if ((x%10)>=5) {
+            return 1 + countBigDigits(x / 10);
+        }
+
+        else{
+            return (countBigDigits(x/10));
+        }
     }
 
     // Write a method that uses recursion to calculate whether
@@ -64,10 +75,21 @@ public class MyMain {
     // moreOddThanEven(99999) => true because 5 odd and 0 even
     // moreOddThanEven(521931) => true because 5 odd and 1 even
     public static boolean moreOddThanEven(int x) {
-        // YOUR CODE HERE
-        return false;
+        return moreOddThanEvenTR(x,0,0);
     }
-
+    public static boolean moreOddThanEvenTR(int x, int countodd, int counteven) {
+        if (x == 0) { //no more left
+            if(countodd<=counteven){
+                return false;
+            }
+        }
+        if (x % 2 == 0) { //is even
+            return moreOddThanEvenTR(x / 10, countodd, counteven + 1);
+        }
+        else { //is odd
+            return moreOddThanEvenTR(x / 10, countodd + 1, counteven);
+        }
+    }
     // This might be helpful to get started:
 //    public static boolean moreOddThanEvenTR(...) {
 
@@ -82,6 +104,21 @@ public class MyMain {
     // isPalindrome("racecars") => false
     public static boolean isPalindrome(String str) {
         // YOUR CODE HERE
+        // compare first letter and last letter and see if match
+        // if dont match then false
+        //chop off first and last letter by substring
+        //2 cases
+        // when hit e in racecar
+        //1 letter always palindome
+        //if its even, there is nothing left
+        //if hit 1 letter or 0 letter = true
+        // or else hit false when getting there/.
+        if (str.length() < 2){
+            return true;
+        }
+        else if (str.charAt(0) == (str.charAt(str.length() - 1))){
+            return isPalindrome(str.substring(1, str.length() -1)); //chop off first and last letters
+        }
         return false;
     }
 
@@ -98,8 +135,12 @@ public class MyMain {
     // countBigDigits(99999) => 45
     // countBigDigits(521931) => 21
     public static int addDigits(int x) {
-        // YOUR CODE HERE
-        return -1;
+        if (x <= 9){
+            return x;
+        }
+        else {
+            return ((x%10) + addDigits(x/10));
+        }
     }
 
     // Write a method that is given a String containing a single pair
@@ -112,8 +153,15 @@ public class MyMain {
     // parenTrim("x(hello)") => "(hello)"
     // parenTrim("(xy)1") => "(xy)"
     public static String parenTrim(String str) {
-        // YOUR CODE HERE
-        return "";
+        if (str.charAt(0) == '(' && str.charAt(str.length() - 1) == ')') { //parents on both sides
+            return str;
+        }
+        else if (str.charAt(0) != '(') { //if character not a paren then delete
+            return parenTrim(str.substring(1));
+        }
+        else {
+            return parenTrim(str.substring(0, str.length() - 1)); //like isPalindrome
+        }
     }
 
     // This method returns the orignal string reversed;
@@ -122,11 +170,18 @@ public class MyMain {
     // reverse("desserts") => stressed
     // reverse("racecar") => racecar
     public static String reverse(String str) {
-        // YOUR CODE HERE
-        return "";
+        return reverseTR(str, "");
     }
 
-
+    public static String reverseTR(String str, String str2) {
+        if (str.length() == 0 ) {
+            return str2;
+        }
+        else {
+            str2 += str.charAt(str.length() - 1); //keep adding to str2 but the last letters from str
+            return reverseTR(str.substring(0, str.length() - 1), str2); //like isPalindrome
+        }
+    }
 
     public static void main(String[] args) {
         // Optional: Write some code here to test your methods!
