@@ -82,6 +82,9 @@ public class MyMain {
             if(countodd<=counteven){
                 return false;
             }
+            else{
+                return true;
+            }
         }
         if (x % 2 == 0) { //is even
             return moreOddThanEvenTR(x / 10, countodd, counteven + 1);
